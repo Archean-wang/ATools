@@ -12,20 +12,21 @@ if __name__ == '__main__':
     old, new = args.old, args.new
     path = args.path if args.path else '.'
     if args.verbose:
-        print(f"work directory is {os.path.realpath(path)}")
+        print(f"[--] work directory is {os.path.realpath(path)}")
     try:
         for file in os.listdir(path):
+            file = os.path.join(path, file)
             if os.path.isfile(file):
-                name, ext = os.path.splitext(file)
+                pre, ext = os.path.splitext(file)
                 if ext.strip('.') == old:
                     if args.verbose:
-                        print(f"## rename {file} to {name}.{new}")
-                    os.rename(file, f"{name}.{new}")
+                        print(f"[##] rename {file} to {pre}.{new}")
+                    os.rename(file, f"{pre}.{new}")
                 else:
                     if args.verbose:
-                        print(f'!! skip file {file}')
+                        print(f'[!!] skip file {file}')
             else:
                 if args.verbose:
-                    print(f'!! skip directory {file}')
+                    print(f'[!!] skip directory {file}')
     except Exception as e:
         print(e)
